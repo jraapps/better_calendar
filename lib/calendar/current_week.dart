@@ -18,26 +18,31 @@ class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
 
     final decoration = (isSelected)
         ? BoxDecoration(
-          color: Color(0xFFFF8291),
-          shape: BoxShape.circle,
+            color: Color(0xFFFF8291),
+            shape: BoxShape.circle,
           )
         : null;
 
     textColor = (isSelected) ? Colors.white : textColor;
 
     return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() => selectedDayIndex = currentIndex);
-        },
-        child: Container(
-          decoration: decoration,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              dayOfTheWeek,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: textColor, fontSize: 15),
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: () {
+            Future.delayed(const Duration(milliseconds: 200), () {
+              setState(() => selectedDayIndex = currentIndex);
+            });
+          },
+          child: Container(
+            decoration: decoration,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                dayOfTheWeek,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: textColor, fontSize: 15),
+              ),
             ),
           ),
         ),
@@ -51,8 +56,7 @@ class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
     List<Widget> list = new List<Widget>();
     for (var i = 0; i < daysOfTheWeek.length; i++) {
       final textColor = (i < 5) ? Colors.black : Color(0xFFA9AEB8);
-      list.add(buildDayWidget(
-          daysOfTheWeek[i], textColor, i));
+      list.add(buildDayWidget(daysOfTheWeek[i], textColor, i));
     }
 
     return Row(children: list);
