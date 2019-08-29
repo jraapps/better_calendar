@@ -9,7 +9,35 @@ class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
   var selectedDayIndex = 0;
 
   List<String> _getDaysOfTheWeek() {
-    return ['26', '27', '28', '29', '30', '31', '1'];
+    List<DateTime> daysOfTheWeek = List<DateTime>();
+
+    // Get the current date
+    var now = DateTime.now();
+    daysOfTheWeek.add(now);
+
+    // Increment until end of the week
+    for (var i = now.weekday + 1; i <= 7; i++) {
+      final lastDateAdded = daysOfTheWeek[daysOfTheWeek.length - 1];
+      final newDate = lastDateAdded.add(Duration(days: 1));
+      daysOfTheWeek.add(newDate);
+    }
+
+    // If weekday is past monday get the previous day until monday
+    if (now.weekday > 1) {
+      for (var i = now.weekday; i > 1; i--) {
+        final mostRecentdate = daysOfTheWeek[0];
+        final newDate = mostRecentdate.subtract(Duration(days: 1));
+        daysOfTheWeek.insert(0, newDate);
+      }
+    }
+
+    // Convert dates to string
+    List<String> daysOfTheWeekStr = List<String>();
+    daysOfTheWeek.forEach((date) {
+      daysOfTheWeekStr.add(date.day.toString());
+    });
+
+    return daysOfTheWeekStr;
   }
 
   Widget buildDayWidget(
