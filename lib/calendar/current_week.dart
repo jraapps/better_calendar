@@ -37,6 +37,18 @@ class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
       daysOfTheWeekStr.add(date.day.toString());
     });
 
+    // Change the highlighted date to current date
+    var index = 0;
+    daysOfTheWeekStr.forEach((dateStr) {
+      if (dateStr == now.day.toString()) {
+        setState(() {
+          selectedDayIndex = index;
+        });
+      }
+
+      index++;
+    });
+
     return daysOfTheWeekStr;
   }
 
