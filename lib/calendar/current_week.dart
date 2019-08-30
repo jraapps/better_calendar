@@ -8,6 +8,13 @@ class CurrentWeekWidget extends StatefulWidget {
 class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
   var selectedDayIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    var now = DateTime.now();
+    selectedDayIndex = now.weekday - 1;
+  }
+
   List<String> _getDaysOfTheWeek() {
     List<DateTime> daysOfTheWeek = List<DateTime>();
 
@@ -35,18 +42,6 @@ class CurrentWeekWidgetState extends State<CurrentWeekWidget> {
     List<String> daysOfTheWeekStr = List<String>();
     daysOfTheWeek.forEach((date) {
       daysOfTheWeekStr.add(date.day.toString());
-    });
-
-    // Change the highlighted date to current date
-    var index = 0;
-    daysOfTheWeekStr.forEach((dateStr) {
-      if (dateStr == now.day.toString()) {
-        setState(() {
-          selectedDayIndex = index;
-        });
-      }
-
-      index++;
     });
 
     return daysOfTheWeekStr;
